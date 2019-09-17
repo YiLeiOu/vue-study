@@ -7,7 +7,7 @@
         <div>
             <router-view></router-view>
         </div>
-        <button @click="jump">个人中心</button>
+        <router-link :to="{name: 'user',params:{userId:'888'}}">user</router-link>
         
     </div>
 </template>
@@ -17,12 +17,6 @@ export default {
     data (){
         return {
 
-        }
-    },
-    methods: {
-        //编程式路由
-        jump(){
-            this.$router.push({path: '/user?userId=2345'});
         }
     }
 }
