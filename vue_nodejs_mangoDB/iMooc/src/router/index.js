@@ -13,19 +13,11 @@ export default new Router({
     {
       path: '/goods',
       name: 'GoodsList',
-      component: GoodsList,
-      children: [
-        {
-          path: 'car',
-          name: 'car',
-          component: Car
-        },
-        {
-          path: 'house',
-          name: 'house',
-          component: House
-        }
-      ]
+      components: {
+        default: GoodsList,
+        car: Car,
+        house: House
+      }
     },
     {
       path: '/user/:userId',
