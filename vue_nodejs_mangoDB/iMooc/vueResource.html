@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-resource</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue-resource/dist/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app" class="container">
+        <p class="title">vue-resource 实验</p>
+        <a class="btn btn-primary" href="javascript:;" @click="get" rel="noopener noreferrer">get Request</a>
+        <a class="btn btn-primary" href="javascript:;" @click="post" rel="noopener noreferrer">post Request</a>
+        <a class="btn btn-primary" href="javascript:;" @click="jsonp" rel="noopener noreferrer">jsonp Request</a>
+        <div class="response">
+            <span>{{msg}}</span>
+        </div>
+    </div>
+    
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data(){
+            return {
+                msg: ''
+            }
+        },
+        // 全局地址
+        http:{
+            root: 'http://127.0.0.1:8080/'
+        },
+        mounted: function(){
+            Vue.http.interceptors.push((request,next)=>{
+                console.log('launch request');
+                // 添加页面loading
+                next((res)=>{
+                    console.log('response start');
+                    return res
+                });
+            });
+        },
+        methods:{
+            get: function(){
+                this.$http.get("package.json",{
+                    paramrs:{
+                        userId: 9527
+                    },
+                    headers:{
+                        token: 'qazwsx'
+                    }
+                }).then((res)=>{
+                    this.msg = res.data
+                },(err)=>{
+                    this.msg = res.data
+                })
+            },
+            // error: Method Not Allowed (http-server 不支持使用post请求方法)
+            post: function(){
+                this.$http.post("package.json",{
+                    userId: '369'
+                },{
+                    headers: {
+                        access_token: 'okmi'
+                    }
+                }).then((res)=>{
+                    this.msg = res.data;
+                },(err)=>{
+                    this.msg = err
+                })
+            },
+            jsonp: function(){
+                this.$http.jsonp(url).then((res)=>{
+                    this.msg = JSON.parse(res.body);
+                },(err)=>{
+                    this.msg = this.err
+                });
+            }
+        }
+    });
+</script>
+
+</html>

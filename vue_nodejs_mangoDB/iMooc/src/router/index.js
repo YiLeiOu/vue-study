@@ -7,7 +7,7 @@ import User from './../views/user.vue'
 
 Vue.use(Router)
 
-export default new Router({
+export let router = new Router({
   mode: 'history',
   routes: [
     {

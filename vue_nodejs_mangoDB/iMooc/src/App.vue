@@ -35,7 +35,7 @@ export default {
   width: 80%;
   margin: 0 auto;
   zoom: 1;
-  /* overflow: hidden; */
+  /* overflow: hidden; 清浮动 */  
 }
 .box::after{
   content: ' ';
