@@ -210,9 +210,11 @@ function myAsyncFunction(url) {
 
 ### AMD、CMD、CommonJS和ES6
 
+AMD、CMD、CommonJS和ES6的import/export 实际上是程序模块化开发的一种规范或标准，每种标准有自身的实现形式，使用不同的语法结构去实现相同的功能，其中的优劣性各有千秋。
+
 #### 定义
 
-1. AMD：RequireJS（模块化开发框架）是AMD模块化标准或规范的一种实现
+1. AMD：RequireJS（模块化开发框架）是AMD模块化标准或规范的一种实现。AMD提供define(id?, dependencies?, factory);这一简洁的API进行模块的定义。支持非同步加载及按需动态加载。
 
     ```
     // 动态异步加载模块
@@ -224,6 +226,13 @@ function myAsyncFunction(url) {
         return{
             foo:foo
         }
+    })
+
+    // 模块调用
+    require(["foo","bar"],function(foo,bar){
+        // do something
+        foo.func();
+        bar.func();
     })
 
     ```
@@ -243,11 +252,23 @@ function myAsyncFunction(url) {
         }
     })
 
+    // 加载模块
+    1.
+    require(function(require,exports,module){
+        var foo = require("foo");
+        // do something
+    })
+
+    2.
+    require(["foo","bar"],function(foo,bar){
+        // do something
+    })
     ```
 
-3. CommonJS：nodeJs服务端代码模块的导出导入规范，使用module.exports或exports.name进行调用
+3. CommonJS：nodeJs服务端代码模块的导出导入规范，使用module.exports或exports.name进行调用，加载方式为同步加载
 
     - 定义模块
+  
     以文件作为单个模块进行区分。每个模块有其单独作用域，除非主动定义变量的作用域为全局作用域，否则其他模块无法对当前模块的变量进行读写。
 
 
@@ -258,7 +279,7 @@ function myAsyncFunction(url) {
 
     - 加载模块
 
-    使用require方法加载导入模块，通过变量进行接收，相当于module.exports对象的一个引用。
+    使用require方法加载导入模块，通过变量进行接收，相当于module.exports对象的一个副本。
 
    ```
    //模块定义 myModel.js
@@ -287,9 +308,29 @@ function myAsyncFunction(url) {
    ```
 
 
-#### 区别
+## 实战
+
+### 注意的点
+- 组件实例中data写成函数的原因是实现组件间的数据
+- 分析页面拆分页面组件
+- 页面视图级的模块新建`views`目录进行统一管理
+- 复用组件放在components目录下管理
+- 使用mock数据进行开发调试。根目录创建mock目录建立
+- 要使用mock数据需在dev-server.js文件配置服务器端路由
 
 
-#### 使用方法
+### slot插槽
+
+通过使用slot插槽可以对组件进一步扩展，对于像header和nav等组件可以更加方便地按需要进行内容填充替换。
+
+### 开发过程中善用mock数据进行调试
+
+**定义：**mock数据是指开发过程中或者开发完成后在本地模拟实际的业务数据结构及属性，对程序进行调试。
+
+前端开发过程中使用mock数据有助于提高开发的效率，不必每次调试都要与后端进行联调。
+
+此外，mock数据的结构和属性完全由前端开发者控制，调整起来会更加灵活。
+
+- 在vue脚手架环境下，猜测由于是热重载规则的原因，在项目的根目录下新建的目录不能通过localhost:port/path/goods.json这种形式通过浏览器或接口访问资源。在浏览器上会报404错误，使用代理中间件用接口访问时返回的是js文件和空的HTML文档。当把上述的goods.json移动到static目录下后就可以成功访问，浏览器也不会报错。当前仅仅是发现这个问题，具体原理还不甚了解，仍有待深入细查。
 
 

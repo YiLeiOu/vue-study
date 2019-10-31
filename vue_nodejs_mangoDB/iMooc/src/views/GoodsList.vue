@@ -1,22 +1,134 @@
 
 <template>
-    <div class="list-wrap">
-        <p>这是商品列表页<span>{{$route.query.goodsId}}</span></p>
-        <!-- <router-link to='/goods/car'>汽车</router-link> -->
-        <!-- <router-link to='/goods/house'>商品房</router-link> -->
-        <div>
-            <router-view></router-view>
+    <div>
+        <nav-header></nav-header>
+        <nav-bread>
+            <!-- 使用slot插槽 -->
+            <span>Goods</span>
+        </nav-bread>
+        <div class="accessory-result-page accessory-page">
+            <div class="container">
+                <div class="filter-nav">
+                <span class="sortby">Sort by:</span>
+                <a href="javascript:void(0)" class="default cur">Default</a>
+                <a href="javascript:void(0)" class="price">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
+                <a href="javascript:void(0)" class="filterby stopPop">Filter by</a>
+                </div>
+                <div class="accessory-result">
+                <!-- filter -->
+                <div class="filter stopPop" id="filter">
+                    <dl class="filter-price">
+                    <dt>Price:</dt>
+                    <dd><a href="javascript:void(0)">All</a></dd>
+                    <dd>
+                        <a href="javascript:void(0)">0 - 100</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:void(0)">100 - 500</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:void(0)">500 - 1000</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:void(0)">1000 - 2000</a>
+                    </dd>
+                    </dl>
+                </div>
+
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                    <div class="accessory-list col-4">
+                    <ul>
+                        <li>
+                        <div class="pic">
+                            <a href="#"><img src="static/img/1.jpg" alt=""></a>
+                        </div>
+                        <div class="main">
+                            <div class="name">XX</div>
+                            <div class="price">999</div>
+                            <div class="btn-area">
+                            <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="pic">
+                            <a href="#"><img src="static/img/2.jpg" alt=""></a>
+                        </div>
+                        <div class="main">
+                            <div class="name">XX</div>
+                            <div class="price">1000</div>
+                            <div class="btn-area">
+                            <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="pic">
+                            <a href="#"><img src="static/img/3.jpg" alt=""></a>
+                        </div>
+                        <div class="main">
+                            <div class="name">XX</div>
+                            <div class="price">500</div>
+                            <div class="btn-area">
+                            <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="pic">
+                            <a href="#"><img src="static/img/4.jpg" alt=""></a>
+                        </div>
+                        <div class="main">
+                            <div class="name">XX</div>
+                            <div class="price">2499</div>
+                            <div class="btn-area">
+                            <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                            </div>
+                        </div>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
-        <router-link :to="{name: 'user',params:{userId:'888'}}">user</router-link>
-        
+        <nav-footer></nav-footer>
     </div>
 </template>
 
 <script>
+
+import "./../assets/css/base.css";
+import "./../assets/css/product.css";
+
+import NavHeader from "@/components/NavHeader";
+import NavFooter from "@/components/NavFooter";
+import NavBread from "@/components/NavBread";
+
+import axios from "axios";
+
 export default {
     data (){
         return {
-
+            goodsList:[]
+        }
+    },
+    components:{
+        NavHeader,
+        NavFooter,
+        NavBread
+    },
+    mounted: function(){
+        this.getGoodsList();
+    },
+    methods:{
+        getGoodsList(){
+            axios.get('/static/data/goods.json').then((result)=>{
+                var res = result.data;
+                this.goodsList = res.result;
+                console.log(this.goodsList)
+            });
         }
     }
 }
