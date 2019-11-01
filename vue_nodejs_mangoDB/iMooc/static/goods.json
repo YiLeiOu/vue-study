@@ -1,0 +1,37 @@
+{
+    "status": 0,
+    "msg": "success",
+    "result": [
+        {
+            "productId": "12345",
+            "productName": "xiaomi6",
+            "productImg": "1.jpg",
+            "productPrice": "899"
+        },
+        {
+            "productId": "12346",
+            "productName": "xiaomi7",
+            "productImg": "2.jpg",
+            "productPrice": "2999"
+        },
+        {
+            "productId": "12347",
+            "productName": "xiaomishouhua",
+            "productImg": "3.jpg",
+            "productPrice": "1899"
+        },
+        {
+            "productId": "12348",
+            "productName": "xiaomi8",
+            "productImg": "4.jpg",
+            "productPrice": "2899"
+        },
+        {
+            "productId": "12349",
+            "productName": "xiaomi9",
+            "productImg": "5.jpg",
+            "productPrice": "3899"
+        }
+        
+    ]
+}
